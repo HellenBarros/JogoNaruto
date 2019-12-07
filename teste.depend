@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1574974612 source:e:\documentos\teste\main.c
+	<allegro.h>
+	<math.h>
+
