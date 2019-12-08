@@ -112,7 +112,7 @@ int main()
   ///BITMAPS
   BITMAP* buffer = create_bitmap(SCREEN_W, SCREEN_H);
 
-  BITMAP* naruto[10];
+  BITMAP* naruto[11];
   naruto[0] = load_bitmap("andou1.bmp", NULL);
   naruto[1] = load_bitmap("andou2.bmp", NULL);
   naruto[2] = load_bitmap("andou3.bmp", NULL);
@@ -123,6 +123,10 @@ int main()
   naruto[7] = load_bitmap("andou8.bmp", NULL);
   naruto[8] = load_bitmap("parado.bmp", NULL);
   naruto[9] = load_bitmap("pulando.bmp", NULL);
+  naruto[10] = load_bitmap("murro_4.bmp", NULL);
+
+
+
   BITMAP* sky = load_bitmap("sky.bmp", NULL);
   BITMAP* montanha = load_bitmap("montanha_hokage.bmp", NULL);
   BITMAP* cenario[8];
@@ -130,15 +134,22 @@ int main()
 
   BITMAP* bloco = load_bitmap("bloco.bmp", NULL);
 
-  BITMAP* manda[2];
+  BITMAP* manda[3];
   manda[0] = load_bitmap("manda.bmp", NULL);
   manda[1] = load_bitmap("manda2.bmp", NULL);
+  manda[2] = load_bitmap("nada.bmp", NULL);
 
-  BITMAP* vida[5];
-  vida[4] = load_bitmap("vida_cheia.bmp", NULL);
-  vida[3] = load_bitmap("vida_muita.bmp", NULL);
-  vida[2] = load_bitmap("vida_metade.bmp", NULL);
-  vida[1] = load_bitmap("vida_final.bmp", NULL);
+  BITMAP* vida[11];
+  vida[10] = load_bitmap("vida_cheia.bmp", NULL);
+  vida[9] = load_bitmap("vida_9.bmp", NULL);
+  vida[8] = load_bitmap("vida_8.bmp", NULL);
+  vida[7] = load_bitmap("vida_7.bmp", NULL);
+  vida[6] = load_bitmap("vida_6.bmp", NULL);
+  vida[5] = load_bitmap("vida_5.bmp", NULL);
+  vida[4] = load_bitmap("vida_4.bmp", NULL);
+  vida[3] = load_bitmap("vida_3.bmp", NULL);
+  vida[2] = load_bitmap("vida_2.bmp", NULL);
+  vida[1] = load_bitmap("vida_1.bmp", NULL);
   vida[0] = load_bitmap("vida_vazia.bmp", NULL);
 
   ///Variaveis
@@ -148,14 +159,15 @@ int main()
   float alt_pers = 80.0;
   float alt_bloco = 60.0;
   float larg_bloco = 60.0;
-  float vel_x = 1.5;
+  float vel_x = 1.0;
   int num_frames = 8;
   int frame_atual = 0;
-  int tempo_troca = 70;
+  int tempo_troca = 90;
   double direcao;
   int num_manda = 2;
   int frame_manda = 0;
-  int frame_vida = 4;
+  int frame_vida = 10;
+
 
 
    int marcador = timer; // MARCADOR DE TEMPO
@@ -203,6 +215,11 @@ int main()
 
          }
 
+          if(key[KEY_SPACE])
+         {
+             frame_atual = 10;
+         }
+
          if(key[KEY_W]&& eixo_y > 80) // PULO
          {
 
@@ -212,6 +229,7 @@ int main()
                 vel_y += gravidade; eixo_y += vel_y;
 
          }
+
 
         // COLISÃO
         if(colidir(250, eixo_y, eixo_x+860, 240, 50, 80, 255, 1)) ////COLISÃO 1ª SERIE DE BLOCOS
@@ -248,13 +266,24 @@ int main()
         }
         else{vel_y += gravidade; eixo_y += vel_y;} // FUNÇÃO DE GRAVIDADE
 
+    if(frame_manda != 2){frame_manda = (milisegundos / 900) % num_manda;
         if(colidir(250, eixo_y, eixo_x+1015, 140, 50, 80, 150, 150)) ////COLISÃO 1ª COBRA
         {
             if(eixo_x<=-709 && eixo_x>=-730){eixo_x = -709;} // BLOQUEIA A PASSAGEM PELA FRENTE DA COBRA
             else if(eixo_x>=-860 && eixo_x<=-740){eixo_x = -860;} // BLOQUEIA A PASSAGEM POR TRAS DA COBRA
-            if(timer - marcador >=2){frame_vida--; marcador = timer; // SERVE PARA NÃO FICAR PERDENDO VIDA CONTINUAMENTE
+            if(key[KEY_SPACE])
+            {
+                frame_atual = 10;
 
+                frame_manda = 2;
+
+            }
+
+            if(timer - marcador >=2){frame_vida--; marcador = timer;} // SERVE PARA NÃO FICAR PERDENDO VIDA CONTINUAMENTE
         }
+    }
+
+
 
          //CONDIÇÕES
 
@@ -275,7 +304,7 @@ int main()
          }
 
 
-        frame_manda = (milisegundos / 900) % num_manda; // MOVIMENTO DA COBRA
+
 
 
 
@@ -318,17 +347,6 @@ END_OF_MAIN();
 
 ///FUNÇÃO COLISÃO
 int colidir(int ax, int ay, int bx, int by, int aw, int ah, int bw, int bh){
-if(ax+aw>bx && ax<bx+bw && ay+ah >by && ay<by+bh) return 1;
+    if(ax+aw>bx && ax<bx+bw && ay+ah >by && ay<by+bh)return 1; // AX = EIXO X DO PERSONAGEM; AY = EIXO Y DO PERSONAGEM; BX = EIXO X DO OBJETO; BY = EIXO Y DO OBJETO; AW = LARGURA DO PERSONAGEM; AH = ALTURA DO PERSONAGEM; BW = LARGURA DO OBJETO; BH = ALTURA DO OBJETO
 
-// AX = EIXO X DO PERSONAGEM; AY = EIXO Y DO PERSONAGEM; BX = EIXO X DO OBJETO; BY = EIXO Y DO OBJETO; AW = LARGURA DO PERSONAGEM; AH = ALTURA DO PERSONAGEM; BW = LARGURA DO OBJETO; BH = ALTURA DO OBJETO
-
-return 0;}
-
-
-
-
-
-
-
-
-
+    return 0;}
